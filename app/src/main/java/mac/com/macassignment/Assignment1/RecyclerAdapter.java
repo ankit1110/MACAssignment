@@ -1,11 +1,15 @@
 package mac.com.macassignment.Assignment1;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -13,6 +17,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import jp.wasabeef.recyclerview.animators.ScaleInAnimator;
 import mac.com.macassignment.R;
 
 /**
@@ -22,7 +27,10 @@ import mac.com.macassignment.R;
     public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerItemViewHolder> {
         private ArrayList<RecyclerData> myList;
         int mLastPosition = 0;
-        private RemoveClickListner mListner;
+        ScaleInAnimator animator = new ScaleInAnimator();
+        Context context;
+
+    private RemoveClickListner mListner;
         public RecyclerAdapter(ArrayList<RecyclerData> myList,RemoveClickListner listner) {
             this.myList = myList;
             mListner=listner;
@@ -37,9 +45,14 @@ import mac.com.macassignment.R;
             Log.d("onBindViewHoler ", myList.size() + "");
             holder.etTitleTextView.setText(myList.get(position).getTitle());
             holder.etDescriptionTextView.setText(myList.get(position).getDescription());
-            holder.crossImage.setImageResource(R.drawable.download);
-            mLastPosition =position;
+
+
+
         }
+        public void animate(RecyclerView.ViewHolder viewHolder) {
+        final Animation animAnticipateOvershoot = AnimationUtils.loadAnimation(context, R.anim.anticipate_overshoot_interpolator);
+        viewHolder.itemView.setAnimation(animAnticipateOvershoot);
+    }
         @Override
         public int getItemCount() {
             return(null != myList?myList.size():0);
@@ -53,12 +66,12 @@ import mac.com.macassignment.R;
             private final TextView etTitleTextView;
             private final TextView etDescriptionTextView;
             private LinearLayout mainLayout;
-            public ImageView crossImage;
+            public Button crossImage;
             public RecyclerItemViewHolder(final View parent) {
                 super(parent);
                 etTitleTextView = (TextView) parent.findViewById(R.id.txtTitle);
                 etDescriptionTextView = (TextView) parent.findViewById(R.id.txtDescription);
-                crossImage = (ImageView) parent.findViewById(R.id.crossImage);
+                crossImage = (Button) parent.findViewById(R.id.crossImage);
                 mainLayout = (LinearLayout) parent.findViewById(R.id.mainLayout);
                 mainLayout.setOnClickListener(new View.OnClickListener() {
                     @Override

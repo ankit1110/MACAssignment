@@ -3,31 +3,45 @@
     android:layout_width="match_parent"
     android:layout_margin="8dp"
     android:id="@+id/card_view"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
     <LinearLayout
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:id="@+id/mainLayout"
+        android:layout_gravity="center_horizontal"
+        android:background="@android:color/holo_orange_light"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
             android:id="@+id/txtTitle"
-            android:padding="12dp"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:layout_gravity="center_horizontal"
             android:layout_width="match_parent"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/background_light"
+            android:textSize="20sp"
+            android:textStyle="bold|italic"
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/txtDescription"
-            android:padding="12dp"
+
+            android:layout_weight="1"
+            android:textSize="20sp"
+            android:textStyle="bold|italic"
+            android:layout_gravity="center_horizontal"
             android:layout_width="match_parent"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/background_light"
             android:layout_height="wrap_content" />
-        <ImageView
+        <Button
             android:id="@+id/crossImage"
-            android:layout_width="65dp"
-            android:layout_height="65dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:visibility="visible"
-            android:layout_marginLeft="285dp"
+            android:layout_weight="1"
+            android:text="Delete Item"
+            android:textColor="@android:color/background_light"
+            android:background="@android:color/holo_blue_dark"
+            android:layout_gravity="center_horizontal"
             android:paddingLeft="10dp"
-            android:background="@drawable/download" />
+            />
     </LinearLayout>
 </android.support.v7.widget.CardView>
