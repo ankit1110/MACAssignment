@@ -8,10 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import mac.com.macassignment.R;
@@ -23,11 +22,23 @@ import mac.com.macassignment.R;
 public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Holder>
 
 {
-    ArrayList<String> mlistData = new ArrayList<>();
+    private List<Product> mData = Collections.emptyList();
+    Context context;
     LayoutInflater layoutInflater;
     public ProductsAdapter(Context context)
     {
-        layoutInflater = LayoutInflater.from(context);
+        this.context = context;
+        //layoutInflater = LayoutInflater.from(context);
+    }
+
+    public ProductsAdapter()
+    {
+
+    }
+
+    public void updateList(List<Product> data) {
+        mData = data;
+        notifyDataSetChanged();
     }
 
 
@@ -42,43 +53,33 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Holder
     @Override
     public void onBindViewHolder(ProductsAdapter.Holder holder, final int position)
     {
-        String name = mlistData.get(position);
-        String price = mlistData.get(position);
+        String name = mData.get(position).getItem_name();
+        String price = mData.get(position).getItem_price();
 
         holder.itemname.setText(name);
         holder.price.setText(price);
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                removeitem(position);
+                removeItem(position);
             }
         });
     }
 
-    public void additem(String name,String price)
-    {
-       try {
-           mlistData.add(name);
-           mlistData.add(price);
-           notifyItemInserted(mlistData.size() - 1);
-       }
-           catch(Exception e)
-           {
-               Log.d("/////////",e.toString());
-           }
-       
+    public void addItem(int position, Product data) {
+        mData.add(position, data);
+        notifyItemInserted(position);
     }
-    public void removeitem(int position)
-    {
-        mlistData.remove(position);
-        notifyItemRemoved(position);
 
+    public void removeItem(int position) {
+        mData.remove(position);
+        notifyItemRemoved(position);
     }
 
     @Override
     public int getItemCount() {
 
-        return mlistData.size();
+        return mData.size();
     }
 
     public class Holder extends RecyclerView.ViewHolder {
@@ -87,9 +88,9 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Holder
         Button delete;
         public Holder(View itemView) {
             super(itemView);
-            itemname = (TextView)itemView.findViewById(R.id.tv_name);
-            price = (TextView)itemView.findViewById(R.id.tv_price);
-            delete = (Button)itemView.findViewById(R.id.btn_delete);
+            itemname = (TextView)itemView.findViewById(R.id.etTitle);
+            price = (TextView)itemView.findViewById(R.id.etDescription);
+            delete = (Button)itemView.findViewById(R.id.btnAddItem);
 
         }
     }
